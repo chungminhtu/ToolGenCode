@@ -70,20 +70,20 @@ public DateTime PublishDate { get; set; }
 
         /*-- Hàm RegEx để cắt và lấy ra các trường --*/
         function GetFields(){
-            ListField = [];
-            const regex = /public .* (\w+) { get; set; }/g;
-            var str= $("#InputModel").val(); //Chuỗi dùng để cắt được lấy từ màn hình nhập bên trên
-            let m;
-            while ((m = regex.exec(str)) !== null) {
-                var matches = [];
-                if (m.index === regex.lastIndex) {
-                    regex.lastIndex++;
-                }
-                m.forEach((match, groupIndex) => {
-                    matches.push(`${match}`);
-                });
-                ListField.push(matches[1]);
+        ListField = [];
+        const regex = /public .* (\w+) { get; set; }/g;
+        var str= $("#InputModel").val(); //Chuỗi Model dùng để cắt các trường, được lấy từ một html input tự nhập.
+        let m;
+        while ((m = regex.exec(str)) !== null) {  //Lặp lại quá trình so khớp chuỗi regex với chuỗi str để tìm group phù hợp
+            var matches = [];
+            if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
             }
+            m.forEach((match, groupIndex) => {
+                matches.push(`${match}`); //Tìm được các Group match thì lưu lại vào mảng
+            });
+            ListField.push(matches[1]); //Ở đây ta cần lấy Group1 (Tương đương $1) để lưu lại vào mảng ListField
+        }
         }
         
         function Preview() {
